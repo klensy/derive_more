@@ -1,5 +1,5 @@
 use crate::utils::{AttrParams, DeriveType, State};
-use convert_case::{Case, Casing};
+use heck::ToSnakeCase;
 use proc_macro2::TokenStream;
 use quote::{format_ident, quote};
 use syn::{DeriveInput, Fields, Result};
@@ -30,7 +30,7 @@ pub fn expand(input: &DeriveInput, trait_name: &'static str) -> Result<TokenStre
         let variant = variant_state.variant.unwrap();
         let fn_name = format_ident!(
             "unwrap_{}",
-            variant.ident.to_string().to_case(Case::Snake),
+            variant.ident.to_string().to_snake_case(),
             span = variant.ident.span(),
         );
         let variant_ident = &variant.ident;
